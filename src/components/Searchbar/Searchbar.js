@@ -1,45 +1,31 @@
-import {Formik , Form, Field} from 'formik';
+import {Formik , Form, } from 'formik';
 
 
 
-export const  Searchbar = ({onSubmit}) => {
-    const handleSubmit =  (values, actions) => {
-         onSubmit(values);
-        actions.resetForm();
-      };
+export default function SearchBar ({ onSubmit }) {
+    const handleSubmit = async (values, actions) => {
+      await onSubmit(values);
+  
+      actions.setSubmitting(false);
+      // actions.resetForm();
+    };
     
     return (
         <Formik
-         initialValues={{ title: '', link: ''}} 
-         onSubmit={handleSubmit}
-            >
+         initialValues={{ searchQuery: ''}} 
+         onSubmit={handleSubmit}>
             <Form>
-                <label>
-                    Opisanie 
-                <Field name="title" type="text"></Field>
-                </label>
-                <br/>
-                <label>
-                    sulka
-                <Field name="link" type="text"></Field>
-                </label>
-            <button type="submit">Add material</button>
+            <button type="submit" className='button'>
+             <span className='button-label'>Search</span>
+          </button>
+           <input
+            name='searchQuery'
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
             </Form>
         </Formik>
-    //     <header class="searchbar">
-    //     <form class="form">
-    //       <button type="submit" class="button">
-    //         <span class="button-label">Search</span>
-    //       </button>
-      
-    //       <inputp
-    //         class="input"
-    //         type="text"
-    //         autocomplete="off"
-    //         autofocus
-    //         placeholder="Search images and photos"
-    //       />
-    //     </form>
-    //   </header>
     );
 };
