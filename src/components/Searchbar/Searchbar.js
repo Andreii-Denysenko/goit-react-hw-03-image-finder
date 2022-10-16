@@ -1,8 +1,7 @@
-import {Formik , Form, } from 'formik';
+import {Formik , Form, Field, } from 'formik';
 
 
-
-export default function SearchBar ({ onSubmit }) {
+export default function SearchBar({ onSubmit }) {
     const handleSubmit = async (values, actions) => {
       await onSubmit(values);
   
@@ -12,20 +11,21 @@ export default function SearchBar ({ onSubmit }) {
     
     return (
         <Formik
-         initialValues={{ searchQuery: ''}} 
+         initialValues={{ searchQuery:''}} 
          onSubmit={handleSubmit}>
-            <Form>
-            <button type="submit" className='button'>
-             <span className='button-label'>Search</span>
-          </button>
-           <input
-            name='searchQuery'
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-            </Form>
+            {({ isSubmitting }) => (
+        <Form>
+        <button type="submit" disabled={isSubmitting}>
+         <span className='button-label'>Search</span>
+      </button>
+      <Field 
+      name="searchQuery"
+      type="text"
+      autoComplete="off"
+      autoFocus
+      placeholder="Search images and photos"/>
+        </Form>
+            )}
         </Formik>
     );
 };
